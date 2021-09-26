@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css?family=Muli&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden; /* 去掉添加 vh 以后出现的滚动条 */
+  display: flex;
+  justify-content: center;
+  
+  /*
+  
+    align-content determines the spacing between lines
+    align-items determines how the items as a whole are aligned within the container.
+    When there is only one line, align-content has no effect
+
+    align-items 控制的是整组元素在页面中的布局方式，是靠边对齐还是居中显示等；
+    align-content 控制的是不同行/列元素是排列方式，是平分宽高还是贴边对齐，控制行/列之间的间距；
+    当只有一行元素时，控制 spacing 的那个属性不生效，也就是 align-content
+
+  */
+  
+  /*align-content: center;*/
+  align-items: center;
+}
+
+.container {
+  display: flex; /* 让五个 div 横向分布，这里我是直接用 img 来实现的 */
+  width: 90vw;
+}
+
+.panel {
+  background-size: cover; /* 设置背景图片的排列模式 */
+  background-position: center; /* 设置背景图片的显示区域 */
+  background-repeat: no-repeat;
+  height: 80vh; /* 设置只占 80% 的高度 */
+  border-radius: 50px;
+  color: white;
+  margin: 10px;
+  cursor: pointer;
+  position: relative;
+  
+  
+  /*
+  h3 设置绝对定位后脱离标准流，
+  作为其父布局，div 不再有可以把它撑开的子元素，所以当前元素的宽度会变成 0
+  .container 横向 flex 布局，当前元素没有指定宽度，使用 flex 让所有元素平分父布局的宽
+  
+  使用给定宽度或者用 flex 平分都可以实现相同的效果，但是使用 width 要保证相加等于 100%，否则右侧会留白
+  
+  */
+  /*width: 10%;*/
+  flex: 0.5;
+  transition: all 700ms ease-in;
+}
+
+.panel h3 {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  margin: 0;
+  font-size: 24px;
+  opacity: 0; /* 默认不显示文字 */
+}
+
+.panel.active {
+  /*width: 60%;*/
+  flex: 5;
+}
+
+.panel.active h3 {
+  opacity: 1;
+  /* 给 h3 的透明度设置渐进动画，持续 0.3s，延迟 0.4s 开始 */
+  transition: opacity 0.3s ease-in 0.4s;
+}
+
+/* 设置媒体查询，小屏设备上只显示三个卡片 */
+@media (max-width: 480px) {
+  .container {
+    width: 100vw;
+  }
+  .panel:nth-child(4),
+  .panel:nth-child(5){
+    display: none;
+  }
+}
