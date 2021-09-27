@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Progress Steps</title>
+  </head>
+  <body>
+
+    <!-- 源码的布局清晰，自己实现的方案结构比较混乱，需要借鉴 -->
+    <div class="container">
+      <div class="progress-container">
+        <!-- 都用 div 实现，我用了很多 p/span 之类的文本标签 -->
+        <div class="progress" id="progress"></div>
+        <div class="circle active">1</div>
+        <div class="circle">2</div>
+        <div class="circle">3</div>
+        <div class="circle">4</div>
+      </div>
+
+      <button class="btn" id="prev" disabled>Prev</button>
+      <button class="btn" id="next">Next</button>
+
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

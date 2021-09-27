@@ -1,0 +1,118 @@
+/* 引入字体 */
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+/* 抽离 CSS 变量 */
+:root {
+  --line-border-fill: #3499db;
+  --line-border-empty: #e0e0e0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f6f7fb;
+  font-family: 'Muli', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden; /* 移除添加 100vh 后出现的滚动条 */
+  margin: 0; /* 移除外边距 */
+}
+
+.container {
+  text-align: center;
+}
+
+.progress-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  max-width: 100%;
+  width: 350px;
+  position: relative;
+}
+
+/*
+使用伪元素，不知道干嘛
+用伪元素实现的底部的进度，我是用一个单独的 div 实现的
+*/
+.progress-container:before {
+  content: '';
+  background-color: var(--line-border-empty); /* 引用全局变量 */
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 4px;
+  z-index: -1; /* 调低优先级，让进度条被进度盖住 */
+}
+
+/*
+ 当前 progress-container 宽度固定为 350px，flex 布局，各元素贴边布局
+ 当前进度条在设置定位之前，也是占一份位置的，和 1234 几个 step 是同级别的兄弟元素
+ 设置绝对定位后，进度条脱离标准流，不再占据父元素的宽，就剩下四个 step 平分宽度了
+ */
+.progress {
+  background-color: var(--line-border-fill);
+  /*display: none;*/
+  /* 利用 top + transform 设置垂直居中 */
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 4px;
+  z-index: -1;
+  transition: 0.4s ease;
+  width: 0; /* 默认 0%，根据按钮点击动态修改 */
+}
+
+.circle {
+  background-color: #fff;
+  color: #999;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center; /* 无法使文字居中，要用 flex 布局实现 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--line-border-empty); /* 默认是灰色边框 */
+  transition: 0.4s ease;
+}
+
+.circle.active {
+  border-color: var(--line-border-fill); /* 选中时变成蓝色 */
+}
+
+.btn {
+  background-color: var(--line-border-fill);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 8px 30px; /* 用 padding 撑起宽高 */
+  margin: 5px;
+  font-size: 14px;
+  /*outline: 0;*/
+}
+
+.btn.active {
+  /* 点击按钮时缩放 */
+  transform: scale(0.98);
+}
+
+.btn:focus {
+  /* 点击时不显示外边框，也可以直接给 button 设置 */
+  outline: 0;
+}
+
+/* 设置禁用状态 */
+.btn:disabled {
+  background-color: var(--line-border-empty);
+  cursor: not-allowed;
+}
